@@ -1,21 +1,36 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const mysql = require('mysql2');
+import { LCDClient } from '@terra-money/feather.js';
+import express from 'express';
+import bodyParser from 'body-parser';
+import mysql from 'mysql2';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const db = mysql.createConnection({
+const lcd = new LCDClient({
+    'pisco-1': {
+	lcd: 'https://blockentropy.dev',
+	chainID: 'pisco-1',
+	gasAdjustment: 2,
+	gasPrices: { uluna: 27.0 },
+	previx: 'terra',
+    },
+
+});
+
+/*const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: 'your_password',
     database: 'your_database'
-});
+});*/
 
-db.connect((err) => {
-    if (err) throw err;
-    console.log('Connected to the MySQL database.');
-});
+//db.connect((err) => {
+//    if (err) throw err;
+//    console.log('Connected to the MySQL database.');
+//});
 
 app.post('/input', (req, res) => {
     const input = req.body.input;
@@ -35,6 +50,9 @@ app.post('/input', (req, res) => {
         }
     });
 });
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 app.use(express.static(__dirname));
 
