@@ -9,16 +9,29 @@ import { dirname, join } from 'path';
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const lcdcolumbus = new LCDClient({
+    'columbus-5': {
+	lcd: 'https://terra-classic-lcd.publicnode.com',
+	chainID: 'columbus-5',
+	gasAdjustment: 5,
+	gasPrices: { uluna: '28.325uluna' },
+	previx: 'terra',
+    },
+
+});
+
+
 const lcd = new LCDClient({
     'pisco-1': {
 	lcd: 'https://blockentropy.dev',
 	chainID: 'pisco-1',
 	gasAdjustment: 2,
-	gasPrices: { uluna: 27.0 },
+	gasPrices: { uluna: '28.325uluna' },
 	previx: 'terra',
     },
 
 });
+
 
 /*const db = mysql.createConnection({
     host: 'localhost',

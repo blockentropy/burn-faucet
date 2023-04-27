@@ -10,8 +10,9 @@ The Block Entropy TestNet Faucet is a front end application that allows anyone t
 The only way to obtain tokens on the testnet is through burning LUNC on columbus-5.
 
 1. Burn LUNC on Columbus-5.  Send LUNC to the burn address, terra1sk06e3dyexuq4shw77y3dsv480xv42mq73anxu
-2. Obtain the tx hash of the transaction.  Copy and Paste the tx hash into this burn faucet.
-3. The equivalent amount of LUNC on testnet will be sent to the wallet that burned LUNC on main net.
+2. Enter "entropy" in the memo field of the transaction
+3. Obtain the tx hash of the transaction.  Copy and Paste the tx hash into this burn faucet.
+4. The equivalent amount of LUNC on testnet will be sent to the wallet that burned LUNC on main net.
 
 ## Purpose of the Burn Faucet
 
