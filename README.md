@@ -18,3 +18,5 @@ The only way to obtain tokens on the testnet is through burning LUNC on columbus
 The purpose of this burn faucet is to faciliate the burning of tokens on Columbus-5 mainnet.  The tokens obtained on testnet 
 can be used for Machine Learning tasks on the testnet only.  These tokens on testnet have no value.  Once you burned your tokens
 on mainnet, they are gone.  There is no way to swap testnet tokens back to mainnet.  
+
+After the establishment of Interchain Accounts, this TestNet will be turned off and the focus will switch from Burn to Utility.
