@@ -11,23 +11,22 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const lcdcolumbus = new LCDClient({
     'columbus-5': {
-	lcd: 'https://terra-classic-lcd.publicnode.com',
-	chainID: 'columbus-5',
-	gasAdjustment: 5,
-	gasPrices: { uluna: '28.325uluna' },
-	previx: 'terra',
+        lcd: 'https://terra-classic-lcd.publicnode.com',
+        chainID: 'columbus-5',
+        gasAdjustment: 5,
+        gasPrices: { uluna: '28.325uluna' },
+        prefix: 'terra',
     },
-
 });
 
 
 const lcd = new LCDClient({
     'pisco-1': {
-	lcd: 'https://blockentropy.dev',
-	chainID: 'pisco-1',
-	gasAdjustment: 2,
-	gasPrices: { uluna: '28.325uluna' },
-	previx: 'terra',
+        lcd: 'https://blockentropy.dev',
+        chainID: 'pisco-1',
+        gasAdjustment: 2,
+        gasPrices: { uluna: '28.325uluna' },
+        prefix: 'terra',
     },
 
 });
@@ -45,11 +44,39 @@ const lcd = new LCDClient({
 //    console.log('Connected to the MySQL database.');
 //});
 
-app.post('/input', (req, res) => {
-    const input = req.body.input;
-    const query = 'SELECT * FROM your_table WHERE input_column = ?';
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/index.html');
+});
 
-    db.query(query, [input], (err, results) => {
+app.post('/input', async (req, res) => {
+    const hash = req.body.hash;
+    try {
+        const txInfo = await lcdcolumbus.tx.txInfo(hash, 'columbus-5');
+
+        // Extract the height
+        const height = txInfo.height;
+
+        // Extract the txhash
+        const txhash = txInfo.txhash;
+
+        // Extract the amount value
+        const amountValue = txInfo.raw_log.match(/"amount","value":"(\d+uluna)"/)[1];
+
+        // Extract the key spender value
+        const spenderValue = txInfo.raw_log.match(/"spender","value":"(terra[\w]+)/)[1];
+
+            // Extract the memo
+            const memo = txInfo.tx.body.memo;
+
+            console.log("Height:", height);
+            console.log("TxHash:", txhash);
+            console.log("Amount Value:", amountValue);
+            console.log("Spender Value:", spenderValue);
+            console.log("Memo:", memo);
+            const input = req.body.input;
+            const query = 'SELECT * FROM your_table WHERE input_column = ?';
+
+            /*db.query(query, [input], (err, results) => {
         if (err) throw err;
 
         if (results.length === 0) {
@@ -61,18 +88,21 @@ app.post('/input', (req, res) => {
         } else {
             res.send(`Input '${input}' already exists in the database.`);
         }
-    });
+    });*/
+            res.send('Data processed.');
+        } catch (error) {
+            console.error('Error fetching transaction info:', error);
+            res.status(500).send('Error fetching transaction info.');
+        }
 });
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+        const __filename = fileURLToPath(import.meta.url);
+        const __dirname = dirname(__filename);
 
-app.use(express.static(__dirname));
+        app.use(express.static(__dirname));
 
-
-
-const port = 3000;
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-});
+        const port = 3000;
+        app.listen(port, () => {
+            console.log(`Server is running on port ${port}`);
+        });
 

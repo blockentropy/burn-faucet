@@ -1,16 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Input Form</title>
+  <title>Input Hash</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%; /* Update the width to 80% */
+    }
+    input[type="text"] {
+      width: 50%; /* Update the width to 80% */
+      padding: 12px 20px;
+      margin: 8px 0;
+      box-sizing: border-box;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    input[type="submit"] {
+      width: 20%;
+      background-color: #4CAF50;
+      color: white;
+      padding: 14px 20px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+  </style>
 </head>
 <body>
-    <form action="/input" method="post">
-        <label for="input">Input:</label>
-        <input type="text" id="input" name="input" required>
-        <button type="submit">Submit</button>
-    </form>
+  <form action="/input" method="post">
+    <input type="text" name="hash" placeholder="Enter hash" required>
+    <input type="submit" value="Submit">
+  </form>
 </body>
 </html>
 
